@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "~=4.1"
+djangorestframework = "~=3.14"
+django-filter = "~=22.1"
+Markdown = "~=3.4"
+gunicorn = {version="~=20.1"}
+
+[dev-packages]
+flake8 = "*"
+mypy = "*"
+
+[requires]
+python_version = "3.11"

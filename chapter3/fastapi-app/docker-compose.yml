@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  application:
+    image: application
+    command: gunicorn server:app --bind 0.0.0.0:8080 --workers 2 --worker-class uvicorn.workers.UvicornWorker
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1024M
+        reservations:
+          cpus: '1'
+          memory: 512M
+    build: ./fastapi_app
+    volumes:
+      - './fastapi_app:/app'
+    ports:
+      - 8080:8080
+    restart: always
+
+  web_server:
+    build: ./nginx
+    ports:
+      - "80:80"
+    links:
+      - application
+    depends_on:
+      - application
+    restart: always

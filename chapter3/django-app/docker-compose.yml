@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  application:
+    image: application
+    command: gunicorn django_application.wsgi --bind 0.0.0.0:8080 --workers 2
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1024M
+        reservations:
+          cpus: '1'
+          memory: 512M
+    build: .
+    volumes:
+      - './django_application:/app'
+    ports:
+      - 8080:8080
+    restart: always
+
+  web_server:
+    build: ./nginx
+    ports:
+      - "80:80"
+    links:
+      - application
+    depends_on:
+      - application
+    restart: always
+
+volumes:
+  static_volume:
