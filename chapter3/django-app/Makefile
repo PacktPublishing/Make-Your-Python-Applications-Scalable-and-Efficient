@@ -20,10 +20,3 @@ up:
 		docker-compose -f docker-compose.yml up --build -d
 		sleep 5
 		docker-compose ps
-
-up-tests:
-		docker stop $(shell docker ps -aq)
-		docker rm $(shell docker ps -aq)
-		docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build -d
-		sleep 5
-		docker-compose ps
